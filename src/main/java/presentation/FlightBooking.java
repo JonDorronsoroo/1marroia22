@@ -209,29 +209,76 @@ public class FlightBooking extends JFrame {
 		jLabelResult.setBounds(109, 180, 243, 16);
 		contentPane.add(jLabelResult);
 
+		final JComboBox HegaldiZerrendacomboBox = new JComboBox();
+		HegaldiZerrendacomboBox.setBounds(38, 174, 356, 22);
+		HegaldiZerrendacomboBox.setModel(HegaldiZerrenda);
+		contentPane.add(HegaldiZerrendacomboBox);
+
+		HegaldiZerrendacomboBox.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				ConcreteFlight aukeratutakoHegaldia = (ConcreteFlight) HegaldiZerrenda.getSelectedItem();
+				if (aukeratutakoHegaldia.getBusinessNumber() == 0) {
+					bussinesTicket.setEnabled(false);
+
+				} else {
+					bussinesTicket.setEnabled(true);
+				}
+				if (aukeratutakoHegaldia.getFirstNumber() == 0) {
+					firstTicket.setEnabled(false);
+
+				} else {
+					firstTicket.setEnabled(true);
+					if (aukeratutakoHegaldia.getTouristNumber() == 0) {
+						touristTicket.setEnabled(false);
+
+					} else {
+						touristTicket.setEnabled(true);
+
+					}
+
+				}
+
+			}
+
+		});
+
 		bookFlight = new JButton("");
 		bookFlight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ConcreteFlight aukeratutakoHegaldia = (ConcreteFlight) HegaldiZerrenda.getSelectedItem();
 				int num = 0;
 				boolean error = false;
+
+				touristTicket.setEnabled(false);
+				firstTicket.setEnabled(false);
+				bussinesTicket.setEnabled(false);
+				HegaldiZerrendacomboBox.setSelectedIndex(0);
+
 				if (bussinesTicket.isSelected()) {
-					num = selectedConcreteFlight.getBusinessNumber();
+					num = aukeratutakoHegaldia.getBusinessNumber();
+
 					if (num > 0)
-						selectedConcreteFlight.setBusinessNumber(num - 1);
+						aukeratutakoHegaldia.setBusinessNumber(num - 1);
 					else
 
 						error = true;
 				} else if (firstTicket.isSelected()) {
-					num = selectedConcreteFlight.getFirstNumber();
+					num = aukeratutakoHegaldia.getFirstNumber();
+
 					if (num > 0)
-						selectedConcreteFlight.setFirstNumber(num - 1);
+						aukeratutakoHegaldia.setFirstNumber(num - 1);
 					else
+
 						error = true;
 				} else if (touristTicket.isSelected()) {
-					num = selectedConcreteFlight.getTouristNumber();
+					num = aukeratutakoHegaldia.getTouristNumber();
+
 					if (num > 0)
-						selectedConcreteFlight.setTouristNumber(num - 1);
+						aukeratutakoHegaldia.setTouristNumber(num - 1);
 					else
+
 						error = true;
 				}
 				if (error)
@@ -239,7 +286,9 @@ public class FlightBooking extends JFrame {
 				else
 					bookFlight.setText("Booked. #seat left: " + (num - 1));
 				bookFlight.setEnabled(false);
+
 			}
+
 		});
 		bookFlight.setBounds(31, 273, 399, 40);
 		contentPane.add(bookFlight);
@@ -271,11 +320,6 @@ public class FlightBooking extends JFrame {
 		ArrivalCitycomboBox.setBounds(94, 36, 135, 22);
 		contentPane.add(ArrivalCitycomboBox);
 
-		JComboBox HegaldiZerrendacomboBox = new JComboBox();
-		HegaldiZerrendacomboBox.setBounds(38, 174, 356, 22);
-		HegaldiZerrendacomboBox.setModel(HegaldiZerrenda);
-		contentPane.add(HegaldiZerrendacomboBox);
-
 		DeparCitycomboBox.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -288,32 +332,6 @@ public class FlightBooking extends JFrame {
 
 			}
 
-		});
-
-		HegaldiZerrendacomboBox.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				int numBussines = 0;
-				numBussines = selectedConcreteFlight.getBusinessNumber();
-				if (numBussines == 0) {
-					bussinesTicket.setEnabled(false);
-				}
-
-				int numFirst = 0;
-				numFirst = selectedConcreteFlight.getFirstNumber();
-				if (numFirst == 0) {
-					firstTicket.setEnabled(false);
-
-				}
-
-				int numTourist = 0;
-				numTourist = selectedConcreteFlight.getTouristNumber();
-				if (numTourist == 0) {
-					touristTicket.setEnabled(false);
-
-				}
-
-			}
 		});
 
 	}
