@@ -167,17 +167,20 @@ public class FlightBooking extends JFrame {
 		contentPane.add(lblRoomType);
 
 		bussinesTicket = new JRadioButton("Business");
+		bussinesTicket.setEnabled(false);
 		bussinesTicket.setSelected(true);
 		fareButtonGroup.add(bussinesTicket);
 		bussinesTicket.setBounds(99, 238, 101, 23);
 		contentPane.add(bussinesTicket);
 
 		firstTicket = new JRadioButton("First");
+		firstTicket.setEnabled(false);
 		fareButtonGroup.add(firstTicket);
 		firstTicket.setBounds(202, 238, 77, 23);
 		contentPane.add(firstTicket);
 
 		touristTicket = new JRadioButton("Tourist");
+		touristTicket.setEnabled(false);
 		fareButtonGroup.add(touristTicket);
 		touristTicket.setBounds(278, 238, 77, 23);
 		contentPane.add(touristTicket);
@@ -201,6 +204,7 @@ public class FlightBooking extends JFrame {
 				else
 					searchResult.setText("Choose an available flight in this list:");
 			}
+
 		});
 		lookforFlights.setBounds(81, 90, 261, 40);
 		contentPane.add(lookforFlights);
@@ -245,6 +249,7 @@ public class FlightBooking extends JFrame {
 		});
 
 		bookFlight = new JButton("");
+		bookFlight.setEnabled(false);
 		bookFlight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConcreteFlight aukeratutakoHegaldia = (ConcreteFlight) HegaldiZerrenda.getSelectedItem();
@@ -257,6 +262,7 @@ public class FlightBooking extends JFrame {
 				HegaldiZerrendacomboBox.setSelectedIndex(0);
 
 				if (bussinesTicket.isSelected()) {
+
 					num = aukeratutakoHegaldia.getBusinessNumber();
 
 					if (num > 0)
@@ -265,14 +271,17 @@ public class FlightBooking extends JFrame {
 
 						error = true;
 				} else if (firstTicket.isSelected()) {
+
 					num = aukeratutakoHegaldia.getFirstNumber();
 
 					if (num > 0)
 						aukeratutakoHegaldia.setFirstNumber(num - 1);
+
 					else
 
 						error = true;
 				} else if (touristTicket.isSelected()) {
+
 					num = aukeratutakoHegaldia.getTouristNumber();
 
 					if (num > 0)
@@ -286,6 +295,11 @@ public class FlightBooking extends JFrame {
 				else
 					bookFlight.setText("Booked. #seat left: " + (num - 1));
 				bookFlight.setEnabled(false);
+				HegaldiZerrenda.addElement("                     ");
+				HegaldiZerrendacomboBox.setSelectedIndex(HegaldiZerrendacomboBox.getItemCount() - 1);
+				bussinesTicket.setEnabled(true);
+				firstTicket.setEnabled(true);
+				touristTicket.setEnabled(true);
 
 			}
 
@@ -330,6 +344,42 @@ public class FlightBooking extends JFrame {
 					ArrivalCity.addElement(i);
 				}
 
+			}
+
+		});
+
+		touristTicket.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (touristTicket.isSelected() && touristTicket.isEnabled()) {
+					bookFlight.setEnabled(true);
+				} else {
+					bookFlight.setEnabled(false);
+				}
+			}
+		});
+		firstTicket.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (firstTicket.isSelected() && firstTicket.isEnabled()) {
+					bookFlight.setEnabled(true);
+				} else {
+					bookFlight.setEnabled(false);
+				}
+			}
+
+		});
+		bussinesTicket.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (bussinesTicket.isSelected() && bussinesTicket.isEnabled()) {
+					bookFlight.setEnabled(true);
+				} else {
+					bookFlight.setEnabled(false);
+				}
 			}
 
 		});
