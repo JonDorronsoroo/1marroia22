@@ -188,6 +188,8 @@ public class FlightBooking extends JFrame {
 		lookforFlights = new JButton("Look for Concrete Flights");
 		lookforFlights.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				HegaldiZerrenda.removeAllElements();
+
 				/*
 				 * bookFlight.setEnabled(true); flightInfo.clear(); bookFlight.setText("");
 				 */
@@ -255,6 +257,7 @@ public class FlightBooking extends JFrame {
 				ConcreteFlight aukeratutakoHegaldia = (ConcreteFlight) HegaldiZerrenda.getSelectedItem();
 				int num = 0;
 				boolean error = false;
+				String botoiMota = null;
 
 				touristTicket.setEnabled(false);
 				firstTicket.setEnabled(false);
@@ -262,38 +265,18 @@ public class FlightBooking extends JFrame {
 				HegaldiZerrendacomboBox.setSelectedIndex(0);
 
 				if (bussinesTicket.isSelected()) {
+					botoiMota = "bussines";
 
-					num = aukeratutakoHegaldia.getBusinessNumber();
-
-					if (num > 0)
-						aukeratutakoHegaldia.setBusinessNumber(num - 1);
-					else
-
-						error = true;
 				} else if (firstTicket.isSelected()) {
+					botoiMota = "first";
 
-					num = aukeratutakoHegaldia.getFirstNumber();
-
-					if (num > 0)
-						aukeratutakoHegaldia.setFirstNumber(num - 1);
-
-					else
-
-						error = true;
 				} else if (touristTicket.isSelected()) {
+					botoiMota = "tourist";
 
-					num = aukeratutakoHegaldia.getTouristNumber();
-
-					if (num > 0)
-						aukeratutakoHegaldia.setTouristNumber(num - 1);
-					else
-
-						error = true;
 				}
-				if (error)
-					bookFlight.setText("Error: There were no seats available!");
-				else
-					bookFlight.setText("Booked. #seat left: " + (num - 1));
+				businessLogic.bookSmart(aukeratutakoHegaldia, botoiMota);
+
+				bookFlight.setText("Booked. #seat left: " + (num - 1));
 				bookFlight.setEnabled(false);
 				HegaldiZerrenda.addElement("                     ");
 				HegaldiZerrendacomboBox.setSelectedIndex(HegaldiZerrendacomboBox.getItemCount() - 1);
